@@ -7,10 +7,12 @@ import UserController from './app/controllers/UserController';
 import RoleController from './app/controllers/RoleController';
 import SessionController from './app/controllers/SessionController';
 import FileController from './app/controllers/FileController';
+import AuthController from './app/controllers/AuthController';
 
 const router = Router();
 const upload = multer(multerConfig);
 
+router.post('/auth', AuthController.store);
 router.post('/files', upload.single('file'), FileController.create);
 
 router.get('/users', UserController.index);

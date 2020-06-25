@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import Role from './Role';
+import File from './File';
 
 const SessionSchema = new mongoose.Schema(
   {
@@ -12,12 +14,12 @@ const SessionSchema = new mongoose.Schema(
     },
     background: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Image',
+      ref: File,
       required: false,
     },
     role: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Role',
+      ref: Role,
       required: true,
     },
   },
