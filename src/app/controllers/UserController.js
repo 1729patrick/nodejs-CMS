@@ -3,9 +3,21 @@ import md5 from 'crypto-js/md5';
 
 class UserController {
   async index(_, res) {
-    const users = await User.find();
+    const users = await User.find()
+      .populate('role')
+      .sort({ createdAt: -1 });
 
-    return res.json(users);
+    return res.json(
+      users.map(({ id, firstName, lastName, email, role, createdAt }) => ({
+        id,
+        firstName,
+        lastName,
+        email,
+        role,
+        createdAt,
+        role,
+      }))
+    );
   }
 
   async store(req, res) {
@@ -24,7 +36,8 @@ class UserController {
     const { userId } = req.params;
 
     try {
-      const user = await User.findOneAndUpdate(userId, req.body);
+      const user = await User.findById(userId);
+      await user.update(req.body);
 
       return res.json(user);
     } catch (e) {
