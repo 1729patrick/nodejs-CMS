@@ -5,7 +5,7 @@ import multerConfig from './config/multer';
 
 import UserController from './app/controllers/UserController';
 import RoleController from './app/controllers/RoleController';
-import SessionController from './app/controllers/SessionController';
+import ContentController from './app/controllers/ContentController';
 import FileController from './app/controllers/FileController';
 import AuthController from './app/controllers/AuthController';
 
@@ -25,9 +25,9 @@ router.post('/roles', RoleController.store);
 router.put('/roles/:roleId', RoleController.update);
 router.delete('/roles/:roleId', RoleController.delete);
 
-router.get('/sessions', SessionController.index);
-router.post('/sessions', SessionController.store);
-router.put('/sessions/:sessionId', SessionController.update);
-router.delete('/sessions/:sessionId', SessionController.delete);
+router.get('/contents', ContentController.index);
+router.post('/contents', ContentController.store);
+router.put('/contents/:sessionId', ContentController.update);
+router.delete('/contents/:sessionId', ContentController.delete);
 
 export default router;

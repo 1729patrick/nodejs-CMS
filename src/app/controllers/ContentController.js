@@ -1,15 +1,15 @@
-import Session from '../schemas/Session';
+import Content from '../schemas/Content';
 
-class SessionController {
+class ContentController {
   async index(_, res) {
-    const sessions = await Session.find();
+    const contents = await Content.find().populate(['role', 'background']);
 
-    return res.json(sessions);
+    return res.json(contents);
   }
 
   async store(req, res) {
     try {
-      const session = await Session.create(req.body);
+      const session = await Content.create(req.body);
 
       return res.json(session);
     } catch (e) {
@@ -21,7 +21,7 @@ class SessionController {
     const { sessionId } = req.params;
 
     try {
-      const session = await Session.findOneAndUpdate(sessionId, req.body);
+      const session = await Content.findOneAndUpdate(sessionId, req.body);
 
       return res.json(session);
     } catch (e) {
@@ -32,10 +32,10 @@ class SessionController {
   async delete(req, res) {
     const { sessionId } = req.params;
 
-    await Session.findOneAndDelete(sessionId);
+    await Content.findOneAndDelete(sessionId);
 
     return res.send();
   }
 }
 
-export default new SessionController();
+export default new ContentController();

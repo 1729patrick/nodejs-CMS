@@ -20,7 +20,7 @@ class App {
     this.server.use(express.json());
 
     this.server.use(
-      '/api/files',
+      '/files',
       express.static(join(__dirname, '..', 'tmp', 'uploads'))
     );
   }

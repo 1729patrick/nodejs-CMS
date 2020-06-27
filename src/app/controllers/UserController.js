@@ -8,8 +8,8 @@ class UserController {
       .sort({ createdAt: -1 });
 
     return res.json(
-      users.map(({ id, firstName, lastName, email, role, createdAt }) => ({
-        id,
+      users.map(({ _id, firstName, lastName, email, role, createdAt }) => ({
+        _id,
         firstName,
         lastName,
         email,

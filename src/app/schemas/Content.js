@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import Role from './Role';
 import File from './File';
 
-const SessionSchema = new mongoose.Schema(
+const ContentSchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -28,4 +28,4 @@ const SessionSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model('Session', SessionSchema);
+export default mongoose.model('Content', ContentSchema);
