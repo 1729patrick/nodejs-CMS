@@ -19,11 +19,11 @@ class AuthController {
       return res.status(401).json({ error: 'Password does not match.' });
     }
 
-    const { id, name, role } = user;
+    const { id, role, firstName, lastName } = user;
 
     return res.json({
-      user: { id, name, email, role: role.name },
-      token: jwt.sign({ id, role: role.name }, authConfig.secret, {
+      user: { id, name: `${firstName} ${lastName}`, email, role: role?.name },
+      token: jwt.sign({ id, role: role?.name }, authConfig.secret, {
         expiresIn: authConfig.expiresIn,
       }),
     });

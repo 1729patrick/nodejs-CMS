@@ -34,10 +34,11 @@ class UserController {
 
   async update(req, res) {
     const { userId } = req.params;
+    const password = md5(req.body.password);
 
     try {
       const user = await User.findById(userId);
-      await user.update(req.body);
+      await user.update({ ...req.body, password });
 
       return res.json(user);
     } catch (e) {
