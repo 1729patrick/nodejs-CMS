@@ -3,7 +3,9 @@ import { $lte } from 'mongoose';
 
 class RoleController {
   async index(req, res) {
-    const roles = await Role.find({ level: { $lte: req.role } });
+    const roles = await Role.find({ level: { $lte: req.role } }).sort({
+      level: -1,
+    });
 
     return res.json(roles);
   }
@@ -22,7 +24,7 @@ class RoleController {
     const { roleId } = req.params;
 
     try {
-      const role = await Role.findOneAndUpdate(roleId, req.body);
+      const role = await Role.findOneAndUpdate({ _id: roleId }, req.body);
 
       return res.json(role);
     } catch (e) {

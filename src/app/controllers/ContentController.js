@@ -2,11 +2,9 @@ import Content from '../schemas/Content';
 
 class ContentController {
   async index(req, res) {
-    const contents = await Content.find().populate([
-      'role',
-      'background',
-      'createdBy',
-    ]);
+    const contents = await Content.find()
+      .populate(['role', 'background', 'createdBy'])
+      .sort({ createdAt: -1 });
 
     const contentsFormatted = contents.map(
       ({
@@ -56,7 +54,10 @@ class ContentController {
     const { sessionId } = req.params;
 
     try {
-      const session = await Content.findOneAndUpdate(sessionId, req.body);
+      const session = await Content.findOneAndUpdate(
+        { _id: sessionId },
+        req.body
+      );
 
       return res.json(session);
     } catch (e) {
