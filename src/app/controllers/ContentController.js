@@ -1,15 +1,50 @@
 import Content from '../schemas/Content';
 
 class ContentController {
-  async index(_, res) {
-    const contents = await Content.find().populate(['role', 'background']);
+  async index(req, res) {
+    const contents = await Content.find().populate([
+      'role',
+      'background',
+      'createdBy',
+    ]);
 
-    return res.json(contents);
+    const contentsFormatted = contents.map(
+      ({
+        _id,
+        title,
+        description,
+        background,
+        role,
+        createdAt,
+        createdBy,
+      }) => ({
+        _id,
+        title,
+        description,
+        background,
+        role,
+        createdAt,
+        createdBy: `${createdBy.firstName} ${createdBy.lastName}`,
+      })
+    );
+
+    if (req.role) {
+      return res.json(
+        contentsFormatted.filter(
+          content => !content.role || content.role.level <= req.role
+        )
+      );
+    }
+
+    return res.json(contentsFormatted);
   }
 
   async store(req, res) {
     try {
-      const session = await Content.create(req.body);
+      const session = await Content.create({
+        ...req.body,
+        createdBy: '5ef7c979ac64bd303215a60d' || req.userId,
+      });
 
       return res.json(session);
     } catch (e) {

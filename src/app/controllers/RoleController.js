@@ -1,8 +1,9 @@
 import Role from '../schemas/Role';
+import { $lte } from 'mongoose';
 
 class RoleController {
-  async index(_, res) {
-    const roles = await Role.find();
+  async index(req, res) {
+    const roles = await Role.find({ level: { $lte: req.role } });
 
     return res.json(roles);
   }

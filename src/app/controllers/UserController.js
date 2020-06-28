@@ -1,14 +1,15 @@
 import User from '../schemas/User';
 import md5 from 'crypto-js/md5';
+import { $lte } from 'mongoose';
 
 class UserController {
-  async index(_, res) {
+  async index(req, res) {
     const users = await User.find()
       .populate('role')
       .sort({ createdAt: -1 });
 
-    return res.json(
-      users.map(({ _id, firstName, lastName, email, role, createdAt }) => ({
+    const userFormatted = users.map(
+      ({ _id, firstName, lastName, email, role, createdAt }) => ({
         _id,
         firstName,
         lastName,
@@ -16,7 +17,13 @@ class UserController {
         role,
         createdAt,
         role,
-      }))
+      })
+    );
+
+    return res.json(
+      userFormatted.filter(
+        ({ role }) => !role?.level || role?.level <= req.role
+      )
     );
   }
 

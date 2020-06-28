@@ -1,11 +1,10 @@
 import jwt from 'jsonwebtoken';
 import md5 from 'crypto-js/md5';
 import User from '../schemas/User';
-import Role from '../schemas/Role';
 
 import authConfig from '../../config/auth';
 
-class AuthController {
+class SessionController {
   async store(req, res) {
     const { email, password } = req.body;
 
@@ -22,12 +21,12 @@ class AuthController {
     const { id, role, firstName, lastName } = user;
 
     return res.json({
-      user: { id, name: `${firstName} ${lastName}`, email, role: role?.name },
-      token: jwt.sign({ id, role: role?.name }, authConfig.secret, {
+      user: { id, name: `${firstName} ${lastName}`, email, role: role?.level },
+      token: jwt.sign({ userId: id, role: role?.level }, authConfig.secret, {
         expiresIn: authConfig.expiresIn,
       }),
     });
   }
 }
 
-export default new AuthController();
+export default new SessionController();

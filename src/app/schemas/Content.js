@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import Role from './Role';
 import File from './File';
+import User from './User';
 
 const ContentSchema = new mongoose.Schema(
   {
@@ -20,6 +21,11 @@ const ContentSchema = new mongoose.Schema(
     role: {
       type: mongoose.Schema.Types.ObjectId,
       ref: Role,
+      required: true,
+    },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: User,
       required: true,
     },
   },
