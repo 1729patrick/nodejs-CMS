@@ -22,7 +22,7 @@ class ContentController {
         background,
         role,
         createdAt,
-        createdBy: `${createdBy.firstName} ${createdBy.lastName}`,
+        createdBy: `${createdBy?.firstName} ${createdBy?.lastName}`,
       })
     );
 
@@ -41,7 +41,7 @@ class ContentController {
     try {
       const session = await Content.create({
         ...req.body,
-        createdBy: '5ef7c979ac64bd303215a60d' || req.userId,
+        createdBy: req.userId,
       });
 
       return res.json(session);

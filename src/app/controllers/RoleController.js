@@ -1,5 +1,4 @@
 import Role from '../schemas/Role';
-import { $lte } from 'mongoose';
 
 class RoleController {
   async index(req, res) {
